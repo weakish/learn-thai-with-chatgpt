@@ -1,4 +1,5 @@
 ---
+import plaek from '../../public/plaek.json'
 ---
 
 <html lang="en">
@@ -7,9 +8,23 @@
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>Learn Thai with ChatGPT</title>
 	</head>
 	<body>
-		<h1>Astro</h1>
+		<main>
+			<h1>Learn Thai with ChatGPT</h1>
+			<article>
+				{plaek.chats.map((elem) => {
+					if (elem?.type === "prompt") {
+						return <p>{elem.message[0]}</p>
+					} else {
+						return <blockquote>{elem.message.map((item) => {
+							console.assert(item.type === "p")
+							return <p>{item.data}</p>
+						})}</blockquote>
+					}		
+				})}
+			</article>
+		</main>
 	</body>
 </html>
