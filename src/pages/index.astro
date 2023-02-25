@@ -1,20 +1,23 @@
 ---
 import plaek from '../../public/plaek.json'
 
-type Prompt = {
-    index: number,
-    type: "prompt",
-    message: [string]
-}
-type Response = {
-    index: number,
-    message: Array<{
-        type: "p",
-        data: string
-    }>
-}
+import { z } from "zod"
+const Prompt = z.object({
+    index: z.number(),
+    type: z.literal("prompt"),
+    message: z.array(z.string()).length(1)
+})
+const Response = z.object({
+    index: z.number(),
+    message: z.array(z.object({
+        type: z.literal("p"),
+        data: z.string()
+    }))
+})
+const Chats = z.array(Prompt.or(Response))
 
-const chats = plaek.chats as Array<Prompt | Response>
+
+const chats = Chats.parse(plaek.chats)
 ---
 
 <html lang="en">

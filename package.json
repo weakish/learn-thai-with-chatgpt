@@ -10,7 +10,8 @@
 		"astro": "astro"
 	},
 	"dependencies": {
-		"astro": "^2.0.15"
+		"astro": "^2.0.15",
+		"zod": "^3.20.6"
 	},
 	"devDependencies": {
 		"less": "^4.1.3"
