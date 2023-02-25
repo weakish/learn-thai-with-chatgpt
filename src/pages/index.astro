@@ -1,5 +1,20 @@
 ---
 import plaek from '../../public/plaek.json'
+
+type Prompt = {
+    index: number,
+    type: "prompt",
+    message: [string]
+}
+type Response = {
+    index: number,
+    message: Array<{
+        type: "p",
+        data: string
+    }>
+}
+
+const chats = plaek.chats as Array<Prompt | Response>
 ---
 
 <html lang="en">
@@ -14,13 +29,12 @@ import plaek from '../../public/plaek.json'
 		<main>
 			<h1>Learn Thai with ChatGPT</h1>
 			<article>
-				{plaek.chats.map((elem) => {
-					if (elem?.type === "prompt") {
+				{chats.map((elem) => {
+					if ("type" in elem) {
 						return <p>{elem.message[0]}</p>
 					} else {
 						return <blockquote>{elem.message.map((item) => {
-							console.assert(item.type === "p")
-							return <p>{item.data}</p>
+                            return <p>{item.data}</p>
 						})}</blockquote>
 					}		
 				})}
