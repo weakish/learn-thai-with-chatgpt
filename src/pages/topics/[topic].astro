@@ -10,9 +10,7 @@ export function getStaticPaths() {
 }
 
 const { topic } = Astro.params
-const base = import.meta.env.PROD ? import.meta.env.SITE : "http://localhost:3000"
-const response = await fetch(`${base}/${topic}.json`)
-const data = await response.json()
+const data = await import(`../../../public/topics/${topic}.json`)
 
 const Prompt = z.object({
     index: z.number(),
@@ -29,7 +27,7 @@ const Response = z.object({
 const Chats = z.array(Prompt.or(Response))
 
 const chats = Chats.parse(data.chats)
-const title = `Discuss ${topic?.replace("_", " ")} with ChatGPT`
+const title = `Talk ChatGPT Through ${topic?.replace("_", " ")}`
 ---
 
 <SiteLayout title={title}>

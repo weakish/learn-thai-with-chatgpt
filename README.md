@@ -1,4 +1,4 @@
-# Learn Thai with ChatGPT
+# Talk ChatGPT Through Something
 
 Work in progress.
 
