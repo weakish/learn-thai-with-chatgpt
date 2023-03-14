@@ -10,7 +10,7 @@ export function getStaticPaths() {
 }
 
 const { topic } = Astro.params
-const data = await import(`../../../public/topics/${topic}.json`)
+const { chats } = await import(`../../../public/topics/${topic}.json`)
 
 const Prompt = z.object({
     index: z.number(),
@@ -24,15 +24,15 @@ const Response = z.object({
         data: z.string()
     }))
 })
-const Chats = z.array(Prompt.or(Response))
+const Chat = z.array(Prompt.or(Response))
 
-const chats = Chats.parse(data.chats)
+const chat = Chat.parse(chats)
 const title = `Talk ChatGPT Through ${topic?.replace("_", " ")}`
 ---
 
 <SiteLayout title={title}>
 			<article>
-				{chats.map((elem) => {
+				{chat.map((elem) => {
 					if ("type" in elem) {
 						return <p>{elem.message[0]}</p>
 					} else {
